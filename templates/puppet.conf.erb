@@ -16,7 +16,8 @@ prerun_command = /etc/puppet/etckeeper-commit-pre
 postrun_command = /etc/puppet/etckeeper-commit-post
 
 <%if server != '' -%>
-server = <%= server %>
+server=<%= server %>
+ca_name=Puppet CA <%= server %>
 <% end -%>
 
 [agent]
