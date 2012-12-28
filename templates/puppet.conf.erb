@@ -1,0 +1,43 @@
+[main]
+logdir = <%= logdir %>
+vardir = <%= vardir %>
+ssldir = <%= ssldir %>
+rundir = <%= rundir %>
+
+<%if environments.is_a? Array -%>
+modulepath = $confdir/environments/$environment/modules:$confdir/modules
+manifest = $confdir/manifests/unknown_environment.pp
+<% else -%>
+modulepath = $confdir/modules
+templatedir = $confdir/templates
+<% end %>
+factpath=$vardir/lib/facter
+prerun_command = /etc/puppet/etckeeper-commit-pre
+postrun_command = /etc/puppet/etckeeper-commit-post
+
+<%if server != '' -%>
+server = <%= server %>
+<% end -%>
+
+[agent]
+environment=<%= environment %>
+
+# Environments, all using the same manifests dir
+<%if environments.is_a? Array -%>
+<% environments.each do |name| -%>
+<%= "[#{name}]" %>
+manifestdir = $confdir/environments/$environment/manifests
+manifest = $confdir/environments/$environment/manifests/site.pp
+
+<% end -%><% end -%>
+
+[master]
+# These are needed when the puppetmaster is run by passenger
+# and can safely be removed if webrick is used.
+ssl_client_header = SSL_CLIENT_S_DN 
+ssl_client_verify_header = SSL_CLIENT_VERIFY
+<%if server != '' -%>
+certname = <%= server %>
+<% end -%>
+
+
