@@ -12,11 +12,14 @@ modulepath = $confdir/modules
 templatedir = $confdir/templates
 <% end %>
 factpath=$vardir/lib/facter
+<%if osfamily == 'Debian' -%>
 prerun_command = /etc/puppet/etckeeper-commit-pre
 postrun_command = /etc/puppet/etckeeper-commit-post
+<% end -%>
 
 <%if server != '' -%>
-server = <%= server %>
+server=<%= server %>
+ca_name=Puppet CA <%= server %>
 <% end -%>
 
 [agent]
