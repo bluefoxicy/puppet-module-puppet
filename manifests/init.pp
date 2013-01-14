@@ -4,7 +4,7 @@ class puppet(
 	$repository	= 'distro',
 	$environment	= 'production',
 	$environments	= '',
-	$server		= '',
+	$server,
 ) {
 
 	@file { '/etc/puppet':

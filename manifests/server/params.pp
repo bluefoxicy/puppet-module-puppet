@@ -5,6 +5,8 @@ class puppet::server::params(
 		fail("Unsupported daemon $daemon")
 	}
 
+	$server	= $::puppet::server
+
 	case $osfamily {
 	 Debian: {
 		$webserver		= 'apache2'
@@ -23,7 +25,7 @@ class puppet::server::params(
 		 passenger: { 
 			$pm_pkg_mode	= absent
 			@file { '/etc/apache2/sites-available/puppetmaster':
-				source	=> 'puppet:///modules/puppet/etc/apache2/sites-available/puppetmaster',
+				content	=> template('puppet/puppetmaster.apache2.erb'),
 				owner	=> root,
 				group	=> root,
 				mode	=> 0444;
