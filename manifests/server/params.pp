@@ -1,11 +1,8 @@
-class puppet::server::params(
-	$daemon	= 'passenger',
-) {
+class puppet::server::params {
+  $daemon = $::puppet::daemon
 	if ( $daemon != 'webrick' and $daemon != 'passenger' ) {
 		fail("Unsupported daemon $daemon")
 	}
-
-	$server	= $::puppet::server
 
 	case $osfamily {
 	 Debian: {
@@ -92,23 +89,29 @@ class puppet::server::params(
 	 default:	{ fail("Unsupported osfamily $osfamily") }
 	}
 
-	if $daemon == "webrick" {
-		@file { $pm_install_files:
-			ensure	=> absent,
-		}
-	}
+  if $daemon != 'passenger' {
+    $pm_passenger_ensure = 'absent'
+    @file { $pm_install_files:
+      ensure	=> absent,
+    }
+  }
+  else {
+    $pm_passenger_ensure = 'present'
+  }
 
 	@package { 'puppetmaster':
 		name	=> $puppetmaster_pkg,
 		ensure	=> $pm_pkg_mode,
 		require	=> Class['puppet::repository'],
 		before	=> File['/etc/puppet'],
+		tag     => 'puppetmaster',
 	}
 
-	@package { 'puppetmaster-passenger':
-		name	=> $puppetmaster_passenger_pkg,
-		ensure	=> present,
-		require	=> Class['puppet::repository'],
-	}
-
+  @package { 'puppetmaster-passenger':
+    name    => $puppetmaster_passenger_pkg,
+    ensure  => $pm_passenger_ensure,
+    require => Class['puppet::repository'],
+    before  => File[ $pm_install_files ],
+    tag     => 'puppetmaster',
+  }
 }

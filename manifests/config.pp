@@ -1,15 +1,12 @@
-class puppet::config(
-	$logdir		= '/var/log/puppet',
-	$vardir		= '/var/lib/puppet',
-	$ssldir		= '$vardir/ssl',
-	$rundir		= '/var/run/puppet',
-	$environment	= 'production',
-	$environments	= '',
-	$server		= '',
-) {
-	if $server == '' {
-		fail("puppet::config must be passed a value server => 'puppet.example.com'.")
-	}
+class puppet::config {
+  $servername   = $::puppet::servername
+  $environment  = $::puppet::environment
+  $environments = $::puppet::environments
+  $logdir       = '/var/log/puppet'
+  $vardir       = '/var/lib/puppet'
+  $ssldir       = '$vardir/ssl'
+  $rundir       = '/var/run/puppet'
+
 	file { '/etc/puppet/puppet.conf':
 		content	=> template('puppet/puppet.conf.erb'),
 		owner	=> root,

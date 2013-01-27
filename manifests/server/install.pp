@@ -1,7 +1,7 @@
 class puppet::server::install {
 	realize File['/etc/puppet']
 
-	realize Package[ 'puppetmaster', 'puppetmaster-passenger' ]
+  Package <| tag == 'puppetmaster' |>
 
 	realize File [ $params::pm_install_files ]
 }

@@ -1,9 +1,7 @@
-class puppet::server(
-	$daemon	= 'passenger',
-) {
-	class { puppet::server::params:
-		daemon	=> $daemon,
-	}
+class puppet::server {
+  $daemon    = $::puppet::daemon
+  include puppet::server::params
+  $webserver = $::puppet::server::params::webserver
 
 	case $daemon {
 	 webrick:	{
@@ -14,7 +12,7 @@ class puppet::server(
 		$pm_ensure		= stopped
 		$pm_enable		= false
 		service { 'puppetmaster-passenger':
-			name		=> $::puppet::server::params::webserver,
+			name		=> $webserver,
 			ensure		=> running,
 			enable		=> true,
 			hasstatus	=> true,
