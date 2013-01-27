@@ -10,16 +10,15 @@ class puppet(
   if ( !defined($servername) ) {
     fail('Must set servername => puppetmaster.example.com')
   }
-	@file { '/etc/puppet':
-		ensure	=> directory,
-		owner	=> root,
-		group	=> root,
-		mode	=> 0644,
-	}
+  @file { '/etc/puppet':
+    ensure => directory,
+    owner  => root,
+    group  => root,
+    mode   => 0644,
+  }
 
   include puppet::repository
   include puppet::client
   include puppet::server
   include puppet::config
-
 }
