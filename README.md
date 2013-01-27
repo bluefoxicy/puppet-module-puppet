@@ -12,12 +12,14 @@ try putting the following...
 
 /etc/puppet/environments/production/manifests/sites.pp:
 
-```import 'nodes/*'
+```puppet
+import 'nodes/*'
 ```
 
 /etc/puppet/environments/production/manifests/nodes/puppetmaster.example.com:
 
-```node 'puppetmaster.example.com' {
+```puppet
+node 'puppetmaster.example.com' {
   class { puppet:
     servername    => 'puppetmaster.example.com',
     server        => enabled,
@@ -31,7 +33,8 @@ try putting the following...
 Obviously, you want to start with your manifests directory in the given location.  Here is an example default puppet config that will bootstrap puppet:
 
 
-```[main]
+```config
+[main]
 logdir = /var/log/puppet
 vardir = /var/lib/puppet
 ssldir = $vardir/ssl
