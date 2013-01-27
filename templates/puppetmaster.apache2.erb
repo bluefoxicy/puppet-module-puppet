@@ -15,9 +15,9 @@ Listen 8140
         SSLProtocol -ALL +SSLv3 +TLSv1
         SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
 
-<%if server != '' -%>
-        SSLCertificateFile      /var/lib/puppet/ssl/certs/<%= server -%>.pem
-        SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/<%= server -%>.pem
+<%if servername != '' -%>
+        SSLCertificateFile      /var/lib/puppet/ssl/certs/<%= servername -%>.pem
+        SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/<%= servername -%>.pem
 <% end -%>
         SSLCertificateChainFile /var/lib/puppet/ssl/certs/ca.pem
         SSLCACertificateFile    /var/lib/puppet/ssl/certs/ca.pem
