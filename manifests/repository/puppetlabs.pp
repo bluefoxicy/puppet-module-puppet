@@ -19,8 +19,8 @@ class puppet::repository::puppetlabs {
     Redhat: {
       $osmajversion = regsubst($operatingsystemrelease, '^(\d+)(\.\d+)?', '\1')
       case $operatingsystem {
-        'Fedora': { $osreleasename = 'el' }
-        default:  { $osreleasename = 'fedora' }
+        'Fedora': { $osreleasename = 'fedora' }
+        default:  { $osreleasename = 'el' }
       }
 
       yumrepo { 'puppetlabs-products':
