@@ -1,39 +1,24 @@
 class puppet(
-	$mode		= 'client',
-	$daemon		= 'passenger',
-	$repository	= 'distro',
-	$environment	= 'production',
-	$environments	= '',
-	$server,
-) {
+  $servername,
+  $server       = $puppet::params::server,
+  $environment  = $puppet::params::environment,
+  $environments = $puppet::params::environments,
+  $daemon       = $puppet::params::daemon,
+  $repository   = $puppet::params::repository,
+) inherits puppet::params {
 
-	@file { '/etc/puppet':
-		ensure	=> directory,
-		owner	=> root,
-		group	=> root,
-		mode	=> 0644,
-	}
+  if ( !defined($servername) ) {
+    fail('Must set servername => puppetmaster.example.com')
+  }
+  @file { '/etc/puppet':
+    ensure => directory,
+    owner  => root,
+    group  => root,
+    mode   => 0644,
+  }
 
-	class { puppet::repository:
-		repository	=> $repository,
-	}
-
-	case $mode {
-	 client: {
-		include puppet::client
-	 }
-	 server: {
-		include	 puppet::client
-		class { puppet::server:
-			daemon	=> $daemon,
-		}
-	 }
-	 default: { fail("Invalid mode $mode") }
-	}
-
-	class { puppet::config:
-		server		=> $server,
-		environment	=> $environment,
-		environments	=> $environments,
-	}
+  include puppet::repository
+  include puppet::client
+  include puppet::server
+  include puppet::config
 }

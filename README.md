@@ -3,31 +3,37 @@ puppet-module-puppet
 
 A module to control Puppet
 
+TODO:
+  - Unicorn/nginx support
+  - Eventually use nginx/apache modules for vhost configuration
+  - PuppetDB support
+
 try putting the following...
 
 /etc/puppet/environments/production/manifests/sites.pp:
 
+```puppet
 import 'nodes/*'
+```
 
+/etc/puppet/environments/production/manifests/nodes/puppetmaster.example.com:
 
-/etc/puppet/environments/production/manifests/nodes/puppet.example.com:
-
-node 'puppet.sbgnet.com' {
-	include sudo
-
-	class { puppet:
-		mode		=> 'server',
-		daemon		=> 'passenger',
-		repository	=> 'puppetlabs',
-		server		=> 'puppet.example.com',
-		environments	=> [ 'production', 'dev', 'testing', ],
-	}
+```puppet
+node 'puppetmaster.example.com' {
+  class { puppet:
+    servername    => 'puppetmaster.example.com',
+    server        => enabled,
+    daemon        => 'passenger',
+    repository    => 'puppetlabs',
+    environments  => [ 'dev', 'testing', 'production' ],
+  }
 }
-
+```
 
 Obviously, you want to start with your manifests directory in the given location.  Here is an example default puppet config that will bootstrap puppet:
 
 
+```config
 [main]
 logdir = /var/log/puppet
 vardir = /var/lib/puppet
@@ -38,10 +44,11 @@ modulepath = $confdir/environments/$environment/modules:$confdir/modules
 manifest = $confdir/manifests/unknown_environment.pp
 
 factpath=$vardir/lib/facter
+# These only show up on Debianites...
 prerun_command = /etc/puppet/etckeeper-commit-pre
 postrun_command = /etc/puppet/etckeeper-commit-post
 
-server = puppet.sbgnet.com
+server = puppet.example.com
 
 [agent]
 environment=production
@@ -57,5 +64,5 @@ manifest = $confdir/environments/$environment/manifests/site.pp
 ssl_client_header = SSL_CLIENT_S_DN 
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 certname = puppet.example.com
-
+```
 
