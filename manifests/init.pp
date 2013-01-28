@@ -7,7 +7,7 @@ class puppet(
   $repository   = $puppet::params::repository,
 ) inherits puppet::params {
 
-  if ( !defined($servername) ) {
+  if ( $servername == '' ) {
     fail('Must set servername => puppetmaster.example.com')
   }
   @file { '/etc/puppet':
