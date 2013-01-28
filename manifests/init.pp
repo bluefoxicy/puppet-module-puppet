@@ -19,6 +19,8 @@ class puppet(
 
   include puppet::repository
   include puppet::client
-  include puppet::server
+  if ( $server == 'enabled' ) {
+    include puppet::server
+  }
   include puppet::config
 }
