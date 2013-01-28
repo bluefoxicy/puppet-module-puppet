@@ -16,7 +16,7 @@ class puppet::repository::load {
 		}
 	 }
 	 Redhat: {
-		fail('FIXME:  Use $osfamily to detect RHEL--where do the GPG keys and yum.repos.d files go precisely?')
+		#fail('FIXME:  Use $osfamily to detect RHEL--where do the GPG keys and yum.repos.d files go precisely?')
 	 }
 	 default: { fail("Cannot install repos on $osfamily") }
 	}
