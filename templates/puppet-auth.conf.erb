@@ -102,10 +102,9 @@ path /environments
 auth any
 
 <% environments.each do |name| -%>
-<%= "[#{name}]" %>
 path /environments/<%= name -%>/files
 auth yes
-environment <%= name -%>
+environment <%= name %>
 allow *
 
 <% end -%><% end -%>
