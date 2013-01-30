@@ -14,6 +14,20 @@ class puppet::config {
     mode    => '0444',
   }
 
+  file { '/etc/puppet/auth.conf':
+    content => template('puppet/puppet-auth.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0444',
+  }
+
+  file { '/etc/puppet/fileserver.conf':
+    source => 'puppet:///modules/puppet/etc/puppet/fileserver.conf',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0444',
+  }
+
   case $osfamily {
     debian: {
       file { '/etc/default/puppet':
