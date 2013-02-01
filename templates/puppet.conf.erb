@@ -30,7 +30,8 @@ environment=<%= environment %>
 <% environments.each do |name| -%>
 <%= "[#{name}]" %>
 manifestdir = $confdir/environments/$environment/manifests
-manifest = $confdir/environments/$environment/manifests/site.pp
+templatedir = $confdir/environments/$environment/templates
+manifest    = $confdir/environments/$environment/manifests/site.pp
 
 <% end -%><% end -%>
 
