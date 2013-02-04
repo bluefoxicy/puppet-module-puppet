@@ -1,10 +1,12 @@
 class puppet(
   $servername,
-  $server       = $puppet::params::server,
-  $environment  = $puppet::params::environment,
-  $environments = $puppet::params::environments,
-  $daemon       = $puppet::params::daemon,
-  $repository   = $puppet::params::repository,
+  $server               = $puppet::params::server,
+  $environment          = $puppet::params::environment,
+  $environments         = $puppet::params::environments,
+  $daemon               = $puppet::params::daemon,
+  $repository           = $puppet::params::repository,
+  $storedconfigs        = $puppet::params::storedconfigs,
+  $thin_storedconfigs   = $puppet::params::storedconfigs,
 ) inherits puppet::params {
 
   if ( $servername == '' ) {

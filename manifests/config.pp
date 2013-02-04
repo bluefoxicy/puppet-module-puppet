@@ -1,11 +1,13 @@
 class puppet::config {
-  $servername   = $::puppet::servername
-  $environment  = $::puppet::environment
-  $environments = $::puppet::environments
-  $logdir       = '/var/log/puppet'
-  $vardir       = '/var/lib/puppet'
-  $ssldir       = '$vardir/ssl'
-  $rundir       = '/var/run/puppet'
+  $servername           = $::puppet::servername
+  $environment          = $::puppet::environment
+  $environments         = $::puppet::environments
+  $storedconfigs        = $::puppet::storedconfigs
+  $thin_storedconfigs   = $::puppet::thin_storedconfigs
+  $logdir               = '/var/log/puppet'
+  $vardir               = '/var/lib/puppet'
+  $ssldir               = '$vardir/ssl'
+  $rundir               = '/var/run/puppet'
 
   file { '/etc/puppet/puppet.conf':
     content => template('puppet/puppet.conf.erb'),

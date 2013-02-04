@@ -1,9 +1,11 @@
 class puppet::params(
-  $server       = 'disabled',
-  $environment  = 'production',
-  $environments = [ 'dev', 'testing', 'production' ],
-  $daemon       = 'webrick',
-  $repository   = 'distro',
+  $server               = 'disabled',
+  $environment          = 'production',
+  $environments         = [ 'dev', 'testing', 'production' ],
+  $daemon               = 'webrick',
+  $repository           = 'distro',
+  $storedconfigs        = false,
+  $thin_storedconfigs   = true,
 ) {
 
 }

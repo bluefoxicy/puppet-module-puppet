@@ -44,4 +44,10 @@ ssl_client_verify_header = SSL_CLIENT_VERIFY
 certname = <%= servername %>
 <% end -%>
 
+<%if storedconfigs == 'true' -%>
+storeconfigs = true
+<%if thn_storedconfigs == 'true' -%>
+thin_storeconfigs = true 
+<% end -%>
+<% end -%>
 
