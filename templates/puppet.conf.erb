@@ -45,8 +45,9 @@ certname = <%= servername %>
 <% end -%>
 
 <%if storedconfigs == 'true' -%>
-storeconfigs = true
-<%if thn_storedconfigs == 'true' -%>
+storeconfigs         = true
+storeconfigs_backend = puppetdb
+<%if thin_storedconfigs == 'true' -%>
 thin_storeconfigs = true 
 <% end -%>
 <% end -%>
