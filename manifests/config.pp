@@ -14,6 +14,7 @@ class puppet::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0444',
+    tag     => 'puppet-config',
   }
 
   file { '/etc/puppet/auth.conf':
@@ -21,6 +22,7 @@ class puppet::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0444',
+    tag     => 'puppet-config',
   }
 
   file { '/etc/puppet/fileserver.conf':
@@ -28,6 +30,7 @@ class puppet::config {
     owner  => 'root',
     group  => 'root',
     mode   => '0444',
+    tag     => 'puppet-config',
   }
 
   case $osfamily {
@@ -37,6 +40,7 @@ class puppet::config {
         owner  => 'root',
         group  => 'root',
         mode   => '0444',
+        tag     => 'puppet-config',
       }
     }
   }
