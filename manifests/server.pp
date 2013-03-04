@@ -1,48 +1,24 @@
 class puppet::server {
-  $server    = $::puppet::server
   $daemon    = $::puppet::daemon
-  include puppet::server::params
-  $webserver = $::puppet::server::params::webserver
 
-  if ( $server != 'enabled' ) {
-    $pm_ensure       = stopped
-    $pm_enable       = false
-  }
-  else {
-    case $daemon {
-      webrick: {
-        $pm_ensure     = running
-        $pm_enable     = true
+  case $daemon {
+    webrick: {
+      service { 'puppetmaster':
+        ensure      => running,
+        enable      => true,
+        hasstatus   => true,
+        hasrestart  => true,
       }
-      passenger: {
-        $pm_ensure		= stopped
-        $pm_enable		= false
-        service { 'puppetmaster-passenger':
-          name         => $webserver,
-          ensure       => running,
-          enable       => true,
-          hasstatus    => true,
-          hasrestart   => true,
-          require      =>
-            [
-              Class['puppet::server::install'],
-              Class['puppet::config'],
-            ],
-            subscribe  => File['/etc/puppet/puppet.conf'];
-        }
-      }
-      default: { fail("Unsupported daemon $daemon") }
+      File <| tag == 'puppet-config' |> ~>
+      Service['puppetmaster']
     }
-
-    include puppet::server::install
-  }
-
-  service { 'puppetmaster':
-    ensure      => $pm_ensure,
-    enable      => $pm_enable,
-    hasstatus   => true,
-    hasrestart  => true,
-    subscribe   => File['/etc/puppet/puppet.conf'];
+    passenger: {
+      include puppet::server::passenger
+    }
+    unicorn: {
+      include puppet::server::unicorn
+    }
+    default: { fail("Unsupported daemon $daemon") }
   }
 }
 
