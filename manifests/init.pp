@@ -1,6 +1,7 @@
 class puppet(
   $servername,
   $server               = $puppet::params::server,
+  $clientservice        = $puppet::params::clientservice,
   $environment          = $puppet::params::environment,
   $environments         = $puppet::params::environments,
   $daemon               = $puppet::params::daemon,

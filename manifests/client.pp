@@ -1,11 +1,20 @@
 class puppet::client {
   include puppet::client::install
+  $clientservice = $::puppet::clientservice
+  if $clientservice == 'enabled' {
+    $svcrunning  = 'running'
+    $svcenable   = true
+  }
+  else {
+    $svcrunning  = 'stopped'
+    $svcenable   = false
+  }
 
   service { 'puppet':
-    ensure     => running,
+    ensure     => $svcrunning,
     hasstatus  => true,
     hasrestart => true,
-    enable     => true,
+    enable     => $svcenable,
     require    =>
       [
         Class['puppet::client::install'],

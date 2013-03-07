@@ -1,5 +1,6 @@
 class puppet::params(
   $server               = 'disabled',
+  $clientservice        = 'disabled',
   $environment          = 'production',
   $environments         = [ 'dev', 'testing', 'production' ],
   $daemon               = 'webrick',
