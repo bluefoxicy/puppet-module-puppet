@@ -1,5 +1,6 @@
 class puppet::config {
   $servername           = $::puppet::servername
+  $server               = $::puppet::server
   $environment          = $::puppet::environment
   $environments         = $::puppet::environments
   $storedconfigs        = $::puppet::storedconfigs

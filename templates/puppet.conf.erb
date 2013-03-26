@@ -25,6 +25,7 @@ ca_name=Puppet CA <%= servername %>
 [agent]
 environment=<%= environment %>
 
+<%if server == 'enabled' -%>
 # Environments, all using the same manifests dir
 <%if environments.is_a? Array -%>
 <% environments.each do |name| -%>
@@ -51,4 +52,4 @@ storeconfigs_backend = puppetdb
 thin_storeconfigs = true 
 <% end -%>
 <% end -%>
-
+<% end -%> <%# if server == 'enabled' %>
